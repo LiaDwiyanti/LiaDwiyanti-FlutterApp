@@ -14,6 +14,7 @@ class PalindromeProvider extends ChangeNotifier {
 
   void setPalindrome(String palindrome) {
     _palindrome = palindrome;
+    print('Set palindrome: $_palindrome');
     notifyListeners();
   }
 

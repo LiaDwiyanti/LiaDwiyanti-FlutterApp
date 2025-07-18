@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_app/providers/palindrom_provider.dart';
+import 'package:mobile_app/view/second_screen.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PalindromeProvider>(context, listen: false);
-    
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -17,7 +18,7 @@ class FirstScreen extends StatelessWidget {
             ),
           ),
           child: Column(
-            children: <Widget>[
+            children: [
               Container(
                 margin: EdgeInsets.all(20.0),
                 child: Column(
@@ -33,8 +34,8 @@ class FirstScreen extends StatelessWidget {
                       onChanged: (value) => provider.setName(value),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
-                        labelText: 'Name',
-                        labelStyle: TextStyle(
+                        hintText: 'Name',
+                        hintStyle: TextStyle(
                           color: const Color.fromARGB(202, 158, 158, 158),
                         ),
                         filled: true,
@@ -42,15 +43,20 @@ class FirstScreen extends StatelessWidget {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0),
                           borderSide: BorderSide(color: const Color.fromARGB(255, 238, 238, 238), width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: BorderSide(color: const Color.fromARGB(255, 20, 181, 255), width: 1.0),
                         ),
                       ),
                     ),
                     SizedBox(height: 20.0),
                     TextField(
+                      onChanged: (value) => provider.setPalindrome(value),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
-                        labelText: 'Polindrome',
-                        labelStyle: TextStyle(
+                        hintText: 'Palindrome',
+                        hintStyle: TextStyle(
                           color: const Color.fromARGB(202, 158, 158, 158),
                         ),
                         filled: true,
@@ -59,12 +65,24 @@ class FirstScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50.0),
                           borderSide: BorderSide(color: const Color.fromARGB(255, 238, 238, 238), width: 1.0),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: BorderSide(color: const Color.fromARGB(255, 20, 181, 255), width: 1.0),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 40.0),
                     ElevatedButton(
                       onPressed: () {
-                        // Handle button press
+                        final palindrome = provider.palindrome;
+                        if (palindrome.isNotEmpty) {
+                          final isPalin = provider.isPalindrome();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(isPalin ? 'isPalindrome' : 'Not palindrome'),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -77,9 +95,13 @@ class FirstScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
                     ),
+                    SizedBox(height: 10.0),
                     ElevatedButton(
                       onPressed: () {
-                        // Handle button press
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (_) => SecondScreen())
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
