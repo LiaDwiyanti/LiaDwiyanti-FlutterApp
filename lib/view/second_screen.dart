@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_app/providers/palindrom_provider.dart';
+import 'package:mobile_app/providers/user_provider.dart';
+import 'package:mobile_app/view/three_screen.dart';
 
 class SecondScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final name = Provider.of<PalindromeProvider>(context).name;
+    final user = Provider.of<UserProvider>(context).user;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +43,7 @@ class SecondScreen extends StatelessWidget {
                 child: Center(
                   child:
                     Text(
-                      'Selected Username',
+                      user?.first_name ?? 'Selected User Name',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                     ),
                 ),
@@ -51,7 +55,10 @@ class SecondScreen extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (_) => ThreeScreen())
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

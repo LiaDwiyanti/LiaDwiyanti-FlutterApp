@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_app/providers/palindrom_provider.dart';
 import 'package:mobile_app/view/second_screen.dart';
+import 'package:mobile_app/providers/user_provider.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -98,6 +99,7 @@ class FirstScreen extends StatelessWidget {
                     SizedBox(height: 10.0),
                     ElevatedButton(
                       onPressed: () {
+                        Provider.of<UserProvider>(context, listen: false).clearUser();
                         Navigator.push(
                           context, 
                           MaterialPageRoute(builder: (_) => SecondScreen())
